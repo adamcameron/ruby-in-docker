@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+    ruby:
+        build:
+            context: ..
+            dockerfile: ./docker/ruby/Dockerfile
+        volumes:
+            - ./ruby/root_home/.bash_history:/root/.bash_history
+            - ../lib/:/usr/src/ruby-in-docker/lib/
+            - ../spec/:/usr/src/ruby-in-docker/spec/
+        stdin_open: true
+        tty: true
+        networks:
+            - backend
+
+networks:
+  backend:
+    driver: "bridge"
