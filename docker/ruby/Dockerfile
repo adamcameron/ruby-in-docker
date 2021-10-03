@@ -13,5 +13,7 @@ WORKDIR /usr/src/ruby-in-docker
 
 COPY ./Gemfile ./Gemfile
 COPY ./Gemfile.lock ./Gemfile.lock
+COPY ./.rspec ./.rspec
+
 RUN bundle install --binstubs
 RUN bin/rspec --init

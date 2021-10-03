@@ -1,4 +1,4 @@
-require 'Greeting'
+require "greeting"
 
 describe Greeting do
     it "should say \"G'day world\" when we call the greet method" do
