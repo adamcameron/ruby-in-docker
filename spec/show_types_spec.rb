@@ -34,8 +34,7 @@ describe ShowTypes do
         ]
         test_cases.each do |test_case|
             it "should return the type #{test_case.type} for object #{test_case.object}" do
-                type = ShowTypes.get_type(test_case.object)
-                expect(type).to eq test_case.type
+                expect(test_case.object).to be_a test_case.type
             end
         end
     end

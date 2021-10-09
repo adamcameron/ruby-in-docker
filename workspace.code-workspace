@@ -4,5 +4,7 @@
 			"path": "."
 		}
     ],
-    "settings": {}
+    "settings": {
+        "solargraph.commandPath": "/usr/local/bundle/bin/solargraph"
+    }
 }
