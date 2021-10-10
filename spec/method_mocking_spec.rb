@@ -86,35 +86,38 @@ describe "Testing facets of RSpec mocking" do
 
             MyService.set_class_dependency(SomeDependency)
 
+            expect(MyService.calls_static_method_to_not_mock).to be == :THE_ORIGINAL_RETURN_VALUE
             expect(MyService.calls_static_method_to_mock_then_call).to be == :THE_ORIGINAL_RETURN_VALUE
         end
     end
 
     context("tests of instance method mocking") do
         it "mocks-out an instance method call" do
-            double = instance_double(SomeDependency)
-            allow(double).to receive(:instance_method_to_mock_out).and_return(:MOCKED_RETURN_VALUE)
+            dependency = SomeDependency.new
+            allow(dependency).to receive(:instance_method_to_mock_out).and_return(:MOCKED_RETURN_VALUE)
 
-            service = MyService.new(double)
+            service = MyService.new(dependency)
 
             expect(service.calls_instance_method_to_mock_out).to be == :MOCKED_RETURN_VALUE
         end
 
         it "mocks-out one instance method call but leaves another untouched" do
-            double = instance_double(SomeDependency)
-            allow(double).to receive(:instance_method_to_mock_out).and_return(:MOCKED_RETURN_VALUE)
+            dependency = SomeDependency.new
+            allow(dependency).to receive(:instance_method_to_mock_out).and_return(:MOCKED_RETURN_VALUE)
 
-            service = MyService.new(double)
+            service = MyService.new(dependency)
 
+            expect(service.calls_instance_method_to_mock_out).to be == :MOCKED_RETURN_VALUE
             expect(service.calls_instance_method_to_not_mock).to be == :THE_ORIGINAL_RETURN_VALUE
         end
 
         it "expects a mocked method to be called, and then calls its original implementation" do
-            double = instance_double(SomeDependency)
-            allow(double).to receive(:instance_method_to_mock_then_call).and_call_original
+            dependency = SomeDependency.new
+            allow(dependency).to receive(:instance_method_to_mock_then_call).and_call_original
 
-            service = MyService.new(double)
+            service = MyService.new(dependency)
 
+            expect(service.calls_instance_method_to_not_mock).to be == :THE_ORIGINAL_RETURN_VALUE
             expect(service.calls_instance_method_to_mock_then_call).to be == :THE_ORIGINAL_RETURN_VALUE
         end
     end
