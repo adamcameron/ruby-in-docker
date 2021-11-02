@@ -7,12 +7,11 @@ services:
             dockerfile: ./docker/ruby/Dockerfile
         volumes:
             - ./ruby/root_home/.bash_history:/root/.bash_history
-            - ../lib/:/usr/src/ruby-in-docker/lib/
-            - ../spec/:/usr/src/ruby-in-docker/spec/
+            - ../lib:/usr/src/ruby-in-docker/lib
+            - ../spec:/usr/src/ruby-in-docker/spec
             - ../workspace.code-workspace:/usr/src/ruby-in-docker/workspace.code-workspace
             - ../Gemfile:/usr/src/ruby-in-docker/Gemfile
             - ../Gemfile.lock:/usr/src/ruby-in-docker/Gemfile.lock
-            - ../.vscode/:/usr/src/ruby-in-docker/.vscode/
         stdin_open: true
         tty: true
         networks:
