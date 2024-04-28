@@ -1,19 +1,12 @@
-FROM ruby:3.0.2
+FROM ruby:3.3-bookworm
 
 RUN apt-get update
 RUN apt-get install vim --yes
 
-COPY ./docker/ruby/root_home/.bashrc /root/.bashrc
-COPY ./docker/ruby/root_home/.vimrc /root/.vimrc
-
-# throw errors if Gemfile has been modified since Gemfile.lock
-RUN bundle config --global frozen 1
+COPY root_home/.bashrc /root/.bashrc
+COPY root_home/.vimrc /root/.vimrc
 
 WORKDIR /usr/src/ruby-in-docker
 
-COPY ./Gemfile ./Gemfile
-COPY ./Gemfile.lock ./Gemfile.lock
-COPY ./.rspec ./.rspec
-
-RUN bundle install --binstubs
-RUN bin/rspec --init
+COPY --chmod=755 usr/local/bin/entrypoint.sh /usr/local/bin/
+ENTRYPOINT entrypoint.sh
